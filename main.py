@@ -24,21 +24,6 @@ class FlatList:
             itm = next(self.list_iterator)
         return itm
 
-        # if not isinstance(itm, list):
-        #     self.current_index += 1
-        #     return itm
-        # else:
-        #     inner_list = iter(itm)
-        #     # self.list_iterator = inner_list
-        #     # self.__next__ = inner_list.__next__
-        #     return next(inner_list)
-
-        # except StopIteration:
-        #     itm = next(self.list_iterator)
-        #     if isinstance(itm, list):
-        #         iter_obj = iter(itm)
-        #         return next(iter_obj)
-
 
 def flatten(s):
     if not s:
@@ -54,11 +39,6 @@ if __name__ == '__main__':
         ['d', 'e', 'f', 'h', False],
         [1, 2, None],
     ]
-
-    # input_list = [[1, 2, 3], 'b']
-
-    # for item in FlatList(input_list):
-    #     print(item)
 
     res = list(FlatList(input_list))
     print(res)

@@ -111,6 +111,14 @@ def advanced_generator(nested_list):
             yield from advanced_generator(itm)
 
 
+def flat_list(list_to_flat):
+    if not isinstance(list_to_flat, list):
+        yield list_to_flat
+    else:
+        for item in list_to_flat:
+            yield from flat_list(item)
+
+
 if __name__ == '__main__':
     input_list_simple = [
         ['a', 'b', 'c'],
@@ -149,4 +157,10 @@ if __name__ == '__main__':
     print('Задача 4. Продвинутый (рекурсивный) генератор по сложному списку:')
     print('Сложный список:', input_list_complicated)
     res = list(advanced_generator(input_list_complicated))
+    print('"Выпрямленный" список:', res)
+    print('*' * 100)
+
+    print('Задача 4 /v.2. Продвинутый (рекурсивный) генератор по сложному списку:')
+    print('Сложный список:', input_list_complicated)
+    res = list(flat_list(input_list_complicated))
     print('"Выпрямленный" список:', res)

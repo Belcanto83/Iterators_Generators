@@ -90,17 +90,63 @@ class NestedIterator:
         return item
 
 
+# Простой генератор по списку списков (1 уровень вложенности)
+def simple_generator(nested_list):
+    for itm_group in nested_list:
+        yield from itm_group
+        # for itm in itm_group:
+        #     yield itm
+
+
+def simple_generator_2(nested_list):
+    return (itm for group in nested_list for itm in group)
+
+
+# Продвинутый генератор по списку, который "распрямляет" произвольный список с ЛЮБЫМ уровнем вложенности
+def advanced_generator(nested_list):
+    for itm in nested_list:
+        if not isinstance(itm, list):
+            yield itm
+        else:
+            yield from advanced_generator(itm)
+
+
 if __name__ == '__main__':
-    input_list = [
+    input_list_simple = [
+        ['a', 'b', 'c'],
+        ['d', 'e', 'f'],
+        [1, 2, None],
+    ]
+
+    input_list_complicated = [
         1, ['b', ['c', 'd']], 'e', 2,
         ['f', ['g', 'h'], ['i', False]],
         [3, 4, None], 5
     ]
 
-    for elem in NestedIterator(input_list):
-        print(elem)
+    # for elem in NestedIterator(input_list_complicated):
+    #     print(elem)
+    # print('*' * 100)
+
+    print('Задача 1. Простой итератор по простому списку:')
+    print('Простой список:', input_list_simple)
+    res = list(FlatListSimpleIterator(input_list_simple))
+    print('"Выпрямленный" список:', res)
     print('*' * 100)
 
-    res = list(NestedIterator(input_list))
-    print(res)
+    print('Задача 2. Простой генератор по простому списку:')
+    print('Простой список:', input_list_simple)
+    res = list(simple_generator(input_list_simple))
+    print('"Выпрямленный" список:', res)
     print('*' * 100)
+
+    print('Задача 3. Продвинутый (рекурсивный) итератор по сложному списку:')
+    print('Сложный список:', input_list_complicated)
+    res = list(NestedIterator(input_list_complicated))
+    print('"Выпрямленный" список:', res)
+    print('*' * 100)
+
+    print('Задача 4. Продвинутый (рекурсивный) генератор по сложному списку:')
+    print('Сложный список:', input_list_complicated)
+    res = list(advanced_generator(input_list_complicated))
+    print('"Выпрямленный" список:', res)

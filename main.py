@@ -134,7 +134,7 @@ if __name__ == '__main__':
 
     input_list_complicated = [
         1, ['b', ['c', 'd']], 'e', 2,
-        ['f', ['gdddd', 'h'], ['i', False]],
+        ['f', ['gdddd', [['h']]], ['i', [False]]],
         [3, 4, None], 5
     ]
 

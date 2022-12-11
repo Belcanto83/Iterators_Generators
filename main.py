@@ -1,6 +1,9 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
+from utils import logger
+
+
 # Простой итератор по списку списков (1 уровень вложенности)
 class FlatListSimpleIterator:
     def __init__(self, nested_list):
@@ -27,6 +30,7 @@ class FlatListSimpleIterator:
 
 
 # Рекурсивная функция, которая "распрямляет" произвольный список с ЛЮБЫМ уровнем вложенности
+@logger
 def flatten(s):
     if not s:
         return s
@@ -98,11 +102,13 @@ def simple_generator(nested_list):
         #     yield itm
 
 
+# @logger
 def simple_generator_2(nested_list):
     return (itm for group in nested_list for itm in group)
 
 
 # Продвинутый генератор по списку, который "распрямляет" произвольный список с ЛЮБЫМ уровнем вложенности
+@logger
 def advanced_generator(nested_list):
     for itm in nested_list:
         if not isinstance(itm, list):
@@ -128,7 +134,7 @@ if __name__ == '__main__':
 
     input_list_complicated = [
         1, ['b', ['c', 'd']], 'e', 2,
-        ['f', ['g', 'h'], ['i', False]],
+        ['f', ['gdddd', 'h'], ['i', False]],
         [3, 4, None], 5
     ]
 
@@ -164,3 +170,6 @@ if __name__ == '__main__':
     print('Сложный список:', input_list_complicated)
     res = list(flat_list(input_list_complicated))
     print('"Выпрямленный" список:', res)
+    print('*' * 100)
+
+    # print(flatten(input_list_complicated))

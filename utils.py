@@ -2,6 +2,8 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 from datetime import datetime
+import time
+import functools
 
 
 def logger(func):
@@ -38,7 +40,31 @@ def logger_with_file_path(file_path):
     return wrapper
 
 
-@logger
+def view_function_timer(prefix='', write_to=print):
+
+    def decorator(func):
+        @functools.wraps(func)
+        def inner(*args, **kwargs):
+            try:
+                t0 = time.time()
+                return func(*args, **kwargs)
+            finally:
+                t1 = time.time()
+                write_to(
+                    'View Function',
+                    '({})'.format(prefix) if prefix else '',
+                    func.__name__,
+                    args,
+                    'Took',
+                    '{:.2f}ms'.format(1000 * (t1 - t0)),
+                    # args[0].build_absolute_uri(),
+                )
+        return inner
+
+    return decorator
+
+
+@view_function_timer()
 def print_name(name):
     print('name:', name)
 
@@ -46,7 +72,7 @@ def print_name(name):
 @logger_with_file_path(r'C:\Users\DELL\OneDrive\Документы\log.txt')
 def print_age(age):
     print('age:', age)
-    return 'Возраст напечатан'
+    # return 'Возраст напечатан'
 
 
 if __name__ == '__main__':

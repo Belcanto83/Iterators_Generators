@@ -108,7 +108,7 @@ def simple_generator_2(nested_list):
 
 
 # Продвинутый генератор по списку, который "распрямляет" произвольный список с ЛЮБЫМ уровнем вложенности
-@logger
+# @logger
 def advanced_generator(nested_list):
     for itm in nested_list:
         if not isinstance(itm, list):
